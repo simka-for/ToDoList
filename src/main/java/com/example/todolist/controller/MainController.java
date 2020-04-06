@@ -29,4 +29,5 @@ public class MainController {
         model.addAttribute("tasksCount", tasks.size());
         return "index";
     }
+
 }

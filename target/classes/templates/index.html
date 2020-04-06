@@ -38,9 +38,9 @@
                     <label>Название:</label>
                     <input type="text" name="name" id="newTaskName" value=""/>
                     <label>Дата начала:</label>
-                    <input type="text" class="dateInput" name="dateStart" id="startDatePicker"/>
+                    <input autocomplete="off" type="text" class="dateInput" name="dateStart" id="startDatePicker"/>
                     <label>Дата завершения: </label>
-                    <input type="text" class="dateInput" name="dateEnd" id="finishDatePicker"/>
+                    <input autocomplete="off" type="text" class="dateInput" name="dateEnd" id="finishDatePicker"/>
                     <label>Описание: </label>
                     <textarea name="description" id="newTaskDescription"></textarea>
                     <button id="addNewTaskBtn">Добавить</button>
@@ -52,9 +52,9 @@
                     <label>Название:</label>
                     <input type="text" name="name" id="editTaskName" value=""/>
                     <label>Дата начала:</label>
-                    <input type="text" class="dateInput" name="dateStart" id="editStartDate"/>
+                    <input autocomplete="off" type="text" class="dateInput" name="dateStart" id="editStartDate"/>
                     <label>Дата завершения: </label>
-                    <input type="text" class="dateInput" name="dateEnd" id="editEndDate"/>
+                    <input autocomplete="off" type="text" class="dateInput" name="dateEnd" id="editEndDate"/>
                     <label>Описание: </label>
                     <textarea name="description" id="editTaskDescription"></textarea>
                     <table width="100%">
@@ -68,22 +68,23 @@
                 </form>
             </div>
             <div id="list">
-                <h1>Список дел (Всего - <span th:text="${tasksCount}">0</span>)</h1>
+<!--                <h1>Список дел (Всего - <span th:text="${tasksCount}">0</span>)</h1>-->
+                <h1>Список дел</h1>
                 <button id="showAddTaskFormBtn">Добавить</button>
                 <br><br>
-                <div id="todo-list">
+                <div id="task-list">
 
                 </div>
 
-                <table id="todo-table" width="100%">
+                <table id="task-table" width="100%">
 
                 </table>
                 <br><br>
-                <div id="task-list">
-                    <div th:each="task : ${tasks}">
-                        <a href="#" class="task-link" th:attr="data-id=${task.id}" th:text="${task.name}"></a>
-                    </div>
-                </div>
+<!--                <div id="task-list">-->
+<!--                    <div th:each="task : ${tasks}">-->
+<!--                        <a href="#" class="task-link" th:attr="data-id=${task.id}" th:text="${task.name}"></a>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
         </div>
     </div>

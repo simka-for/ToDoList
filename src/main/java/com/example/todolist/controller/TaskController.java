@@ -1,48 +1,53 @@
 package com.example.todolist.controller;
 
 import com.example.todolist.domain.Task;
-import com.example.todolist.repository.TaskRepository;
-import org.springframework.beans.BeanUtils;
+import com.example.todolist.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
+@RequestMapping("task")
 public class TaskController {
 
-    private final TaskRepository taskRepository;
+    private final TaskService taskService;
 
     @Autowired
-    public TaskController(TaskRepository taskRepository){
-        this.taskRepository = taskRepository;
+    public TaskController(TaskService taskService){
+        this.taskService = taskService;
+    }
+
+    @GetMapping
+    public List<Task> list(){
+
+        return taskService.list();
     }
 
     @PostMapping
-    @RequestMapping("/task/")
-    public Task add(@RequestBody Task task){
+    public void add(@RequestBody Task task){
 
-        return taskRepository.save(task);
+        taskService.addTask(task);
     }
 
-    @GetMapping("/task/{id}")
+    @GetMapping("{id}")
     public Task getInfo(@PathVariable("id") Task task){
 
-        return task;
+        return taskService.getInfo(task);
     }
 
-    @PutMapping("/task/{id}")
+    @PutMapping("{id}")
     public Task update(
             @PathVariable("id") Task taskFromDB,
             @RequestBody Task task
     ){
-        BeanUtils.copyProperties(task, taskFromDB, "id");
-
-        return taskRepository.save(taskFromDB);
+        return taskService.update(taskFromDB, task);
     }
 
-    @DeleteMapping("/task/{id}")
+    @DeleteMapping("{id}")
     public void delete(@PathVariable("id") Task task){
 
-        taskRepository.delete(task);
+        taskService.delete(task);
     }
 
 

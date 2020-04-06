@@ -1,14 +1,35 @@
 $(function () {
 
-    const appendTask = function(data){
-        var taskCode = '<h4>' + data.name + '</h4>' +
-            'Описание:' + data.description + 'дата выполнения' + data.dateEnd;
-        $('#task-list')
-            .append('<div>' + taskCode + '</div>');
-    };
+    getAllTask();
+
+    function getAllTask() {
+        $.ajax({
+            url: "/task/",
+            method: "GET",
+            dataType: "json",
+            success: function(data) {
+                var tableBody = $("#task-table");
+                tableBody.empty();
+                $(data).each(function(index, element) {
+                    tableBody.append(
+                        '<tr>' +
+                        '<td>' +
+                        '<a href="#" class="task-link" data-active=true data-id="' + element.id + '">' + element.name + '</a>' +
+                        '</td>' +
+                        '<td class="taskDate">' + element.dateStart + '</td>' +
+                        '<td class="taskDate">' + element.dateEnd + '</td>' +
+                        '<td>' + element.description + '</td>' +
+                        '</tr>'
+                    );
+                })
+            }
+        });
+    }
 
     $('.dateInput').datepicker({
         dateFormat:"dd.mm.yy",
+        altField: "#actualDate",
+        minDate: new Date(2020, 1 - 1, 1)
     });
 
     $('#showAddTaskFormBtn').click(function() {
@@ -62,7 +83,7 @@ $(function () {
             dataType: "json",
             data: JSON.stringify(formData, null, '\t'),
             success: function() {
-                appendTask();
+                getAllTask();
             },
             error: function (error) {
                 console.log(error);
@@ -86,7 +107,7 @@ $(function () {
             dataType: "json",
             data: JSON.stringify(formData),
             success: function(response) {
-                getAllToDo();
+                getAllTask();
                 $('#editForm').css('display', 'none');
             },
             error: function(response) {
@@ -103,7 +124,7 @@ $(function () {
             url: "/task/" + globTaskId,
             method: "DELETE",
             success: function() {
-                getAllToDo();
+                getAllTask();
                 $("#editForm").css("display", "none");
             },
             error: function (error) {
